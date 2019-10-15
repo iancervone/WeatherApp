@@ -32,13 +32,15 @@ class WeatherViewController: UIViewController {
   var latLong: String? {
     didSet {
       weatherCollectionView.reloadData()
-
     }
   }
   
-//  var getLatLong() {
-//  ZipCodeHelper.get
-//  }
+  var cityName: String? {
+    didSet {
+      weatherCollectionView.reloadData()
+    }
+  }
+  
   
   override func viewDidLoad() {
       super.viewDidLoad()
@@ -46,11 +48,38 @@ class WeatherViewController: UIViewController {
       weatherCollectionView.delegate = self
     }
   
-//  private func loadData() {
-//    DarkSkyAPIClient.manager.getForecast(from: , completionHandler: <#T##(Result<[Forecast], AppError>) -> Void#>)
-//  }
+  
+  private func getLatLong() {
+  ZipCodeHelper.getLatLong(fromZipCode: zipcodeEntered ?? "10128"){ (result) in
+      switch result {
+      case let .success((lat, long, name)):
+        self.latLong = "\(lat),\(long)"
+        self.cityName = name
+      case let .failure(error):
+          print(error)
+      }
+    }
+  }
   
   
+  private func loadData() {
+    DarkSkyAPIClient.manager.getForecast(from: latLong ?? "10128") { (result) in
+      DispatchQueue.main.async { [weak self] in
+        switch result {
+        case let .success(forecast):
+          self?.forecast = forecast
+        case let .failure(error):
+          self?.displayErrorAlert(with: error)
+        }
+      }
+    }
+  }
+  
+  func displayErrorAlert(with error: AppError) {
+    let alertVC = UIAlertController(title: "Error Fetching Data", message: "\(error)", preferredStyle: .alert)
+    alertVC.addAction(UIAlertAction(title: "ok", style: .cancel, handler: nil))
+    present(alertVC, animated: true, completion: nil)
+  }
   
 
 }
@@ -71,6 +100,6 @@ extension WeatherViewController: UITextFieldDelegate {
   func textFieldDidEndEditing(_ textField: UITextField) {
     zipcodeEntered = textField.text
     
-//    loadData()
+    loadData()
   }
 }
