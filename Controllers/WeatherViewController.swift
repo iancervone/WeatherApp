@@ -32,12 +32,14 @@ class WeatherViewController: UIViewController {
   var latLong: String? {
     didSet {
       weatherCollectionView.reloadData()
+      getLatLong()
     }
   }
   
   var cityName: String? {
     didSet {
       weatherCollectionView.reloadData()
+      getLatLong()
     }
   }
   
@@ -46,6 +48,8 @@ class WeatherViewController: UIViewController {
       super.viewDidLoad()
       weatherCollectionView.dataSource = self
       weatherCollectionView.delegate = self
+      loadData()
+      getLatLong()
     }
   
   
@@ -91,7 +95,13 @@ extension WeatherViewController: UICollectionViewDelegate, UICollectionViewDataS
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    <#code#>
+    guard let cell = weatherCollectionView.dequeueReusableCell(withReuseIdentifier: "weatherCell", for: indexPath) as? WeatherCollectionViewCell else {
+      fatalError("expectd WeatherCollectionViewCEll but got something else")
+    }
+    let weather = forecast[indexPath.row]
+    cell.cellHighLabel.text = "\(weather.daily.temperatureHigh) degrees F"
+    cell.cellLowLabel.text = "\(weather.daily.temperatureLow) degrees F"
+    return cell
   }
 }
 
