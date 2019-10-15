@@ -6,8 +6,8 @@ struct DarkSkyAPIClient {
 
   static let manager = DarkSkyAPIClient()
   
-  func getForecast(from latLong: String, completionHandler: @escaping (Result<[Forecast], AppError>) -> Void) {
-     let forecastURL = "https://api.darksky.net/forecast/\(latLong)/37.8267,-122.4233"
+  func getForecast(from coordinates: String, completionHandler: @escaping (Result<[Forecast], AppError>) -> Void) {
+     let forecastURL = "https://api.darksky.net/forecast/\(coordinates)/37.8267,-122.4233"
      guard let url = URL(string: forecastURL) else {
        completionHandler(.failure(.badURL))
        return
@@ -29,3 +29,5 @@ struct DarkSkyAPIClient {
 
   private init() {}
 }
+
+

@@ -138,6 +138,7 @@
 			children = (
 				3C8120CC235501D400D38F83 /* DarkSkyAPIClient.swift */,
 				3C8120CA235501C500D38F83 /* PicbayAPIClient.swift */,
+				3C2FB596235641720046D302 /* Zipcode Helper.swift */,
 				3C8120C82355019D00D38F83 /* ImageHelper.swift */,
 				3C8120CE235501F800D38F83 /* NetworkHelper.swift */,
 				3C2FB59423563D490046D302 /* AppError.swift */,
@@ -149,7 +150,6 @@
 			isa = PBXGroup;
 			children = (
 				3C8120A52355006300D38F83 /* Main.storyboard */,
-				3C2FB596235641720046D302 /* Zipcode Helper.swift */,
 				3C8120D12355075000D38F83 /* WeatherModel.swift */,
 			);
 			path = Models;

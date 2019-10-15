@@ -84,9 +84,6 @@
                                 <color key="backgroundColor" systemColor="opaqueSeparatorColor" red="0.77647058820000003" green="0.77647058820000003" blue="0.7843137255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <action selector="zipcodeTextField:" destination="BYZ-38-t0r" eventType="editingDidEnd" id="Zyr-2e-c1v"/>
-                                </connections>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="enter zipcode" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yG1-4L-ttX">
                                 <rect key="frame" x="154" y="498" width="106" height="21"/>
@@ -102,6 +99,7 @@
                     <connections>
                         <outlet property="locationLabel" destination="jkE-sq-eAY" id="hG7-IZ-SOc"/>
                         <outlet property="weatherCollectionView" destination="PbZ-zo-vnn" id="Tin-1b-5NY"/>
+                        <outlet property="zipcodeTextField" destination="yuY-k6-SZz" id="ulc-PD-ZyH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

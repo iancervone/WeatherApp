@@ -11,10 +11,10 @@ import UIKit
 class WeatherViewController: UIViewController {
     
   @IBOutlet weak var locationLabel: UILabel!
-  @IBAction func zipcodeTextField(_ sender: UITextField) {
-  }
-  @IBOutlet weak var weatherCollectionView: UICollectionView!
+
+  @IBOutlet weak var zipcodeTextField: UITextField!
   
+  @IBOutlet weak var weatherCollectionView: UICollectionView!
   
   
   var forecast = [Forecast]() {
@@ -22,34 +22,55 @@ class WeatherViewController: UIViewController {
       weatherCollectionView.reloadData()
     }
   }
+  
+  var zipcodeEntered: String? = nil {
+    didSet {
+      weatherCollectionView.reloadData()
+    }
+  }
     
+  var latLong: String? {
+    didSet {
+      weatherCollectionView.reloadData()
+
+    }
+  }
+  
+//  var getLatLong() {
+//  ZipCodeHelper.get
+//  }
   
   override func viewDidLoad() {
-        super.viewDidLoad()
+      super.viewDidLoad()
+      weatherCollectionView.dataSource = self
+      weatherCollectionView.delegate = self
     }
+  
+//  private func loadData() {
+//    DarkSkyAPIClient.manager.getForecast(from: , completionHandler: <#T##(Result<[Forecast], AppError>) -> Void#>)
+//  }
+  
+  
   
 
 }
 
 
-//you can change the zipcode function to give you the city name too
-static func getLatLong(fromZipCode zipCode: String, completionHandler: @escaping (Result<(lat: Double, long: Double,name:String), LocationFetchingError>) -> Void) {
-      let geocoder = CLGeocoder()
-      DispatchQueue.global(qos: .userInitiated).async {
-          geocoder.geocodeAddressString(zipCode){(placemarks, error) -> Void in
-              DispatchQueue.main.async {
-                  if let placemark = placemarks?.first, let coordinate = placemark.location?.coordinate, let name = placemark.locality  {
-                      completionHandler(.success((coordinate.latitude, coordinate.longitude,name)))
-                  } else {
-                      let locationError: LocationFetchingError
-                      if let error = error {
-                          locationError = .error(error)
-                      } else {
-                          locationError = .noErrorMessage
-                      }
-                      completionHandler(.failure(locationError))
-                  }
-              }
-          }
-      }
+extension WeatherViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    return 7
   }
+  
+  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    <#code#>
+  }
+}
+
+
+extension WeatherViewController: UITextFieldDelegate {
+  func textFieldDidEndEditing(_ textField: UITextField) {
+    zipcodeEntered = textField.text
+    
+//    loadData()
+  }
+}
