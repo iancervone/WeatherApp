@@ -12,23 +12,20 @@ import Foundation
 struct Forecast: Codable {
   let latitude: Double
   let longitude: Double
-//  let currently: Currently
   let daily: Daily
 }
-
-//struct Currently: Codable {
-//  let icon: String
-//  let temperature: Double
-//}
 
 struct Daily: Codable {
   let summary: String
   let icon: String
+  let data: Data
+}
+
+struct Data: Codable {
   let sunriseTime: Int
   let sunsetTime: Int
   let temperatureHigh: Double
   let temperatureLow: Double
   let windSpeed: Double
-  
 }
 

@@ -15,7 +15,7 @@ class WeatherViewController: UIViewController {
   @IBOutlet weak var weatherCollectionView: UICollectionView!
   
   
-  var forecast = Forecast(latitude: Double, longitude: Double, daily: String) {
+  var forecast = Forecast() {
     didSet {
       weatherCollectionView.reloadData()
       
@@ -62,7 +62,7 @@ class WeatherViewController: UIViewController {
             DispatchQueue.main.async { [weak self] in
               switch result {
               case let .success(forecast):
-                self?.forecast = forecast
+                self?.forecast = [forecast]
               case let .failure(error):
                 self?.displayErrorAlert(with: error)
               }
@@ -110,8 +110,8 @@ extension WeatherViewController: UICollectionViewDelegate, UICollectionViewDataS
       fatalError("expectd WeatherCollectionViewCEll but got something else")
     }
     let weather = forecast[indexPath.row]
-    cell.cellHighLabel.text = "\(weather.daily.temperatureHigh) degrees F"
-    cell.cellLowLabel.text = "\(weather.daily.temperatureLow) degrees F"
+    cell.cellHighLabel.text = "\(weather.daily.data.temperatureHigh) degrees F"
+    cell.cellLowLabel.text = "\(weather.daily.data.temperatureLow) degrees F"
     return cell
   }
 }
