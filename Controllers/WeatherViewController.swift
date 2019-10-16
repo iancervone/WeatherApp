@@ -11,15 +11,14 @@ import UIKit
 class WeatherViewController: UIViewController {
     
   @IBOutlet weak var locationLabel: UILabel!
-
   @IBOutlet weak var zipcodeTextField: UITextField!
-  
   @IBOutlet weak var weatherCollectionView: UICollectionView!
   
   
-  var forecast = [Forecast]() {
+  var forecast = Forecast(latitude: Double, longitude: Double, daily: String) {
     didSet {
       weatherCollectionView.reloadData()
+      
     }
   }
   
@@ -32,14 +31,14 @@ class WeatherViewController: UIViewController {
   var latLong: String? {
     didSet {
       weatherCollectionView.reloadData()
-      getLatLong()
+     // getLatLong()
     }
   }
   
   var cityName: String? {
     didSet {
       weatherCollectionView.reloadData()
-      getLatLong()
+     // getLatLong()
     }
   }
   
@@ -48,8 +47,7 @@ class WeatherViewController: UIViewController {
       super.viewDidLoad()
       weatherCollectionView.dataSource = self
       weatherCollectionView.delegate = self
-      loadData()
-      getLatLong()
+      zipcodeTextField.delegate = self
     }
   
   
@@ -59,15 +57,28 @@ class WeatherViewController: UIViewController {
       case let .success((lat, long, name)):
         self.latLong = "\(lat),\(long)"
         self.cityName = name
+        DispatchQueue.global().async {
+          DarkSkyAPIClient.manager.getForecast(from: self.latLong ?? "37.8267,-122.4233") { (result) in
+            DispatchQueue.main.async { [weak self] in
+              switch result {
+              case let .success(forecast):
+                self?.forecast = forecast
+              case let .failure(error):
+                self?.displayErrorAlert(with: error)
+              }
+            }
+          }
+        }
       case let .failure(error):
           print(error)
       }
     }
+   // loadData()
   }
   
   
   private func loadData() {
-    DarkSkyAPIClient.manager.getForecast(from: latLong ?? "10128") { (result) in
+    DarkSkyAPIClient.manager.getForecast(from: latLong ?? "37.8267,-122.4233") { (result) in
       DispatchQueue.main.async { [weak self] in
         switch result {
         case let .success(forecast):
@@ -91,7 +102,7 @@ class WeatherViewController: UIViewController {
 
 extension WeatherViewController: UICollectionViewDelegate, UICollectionViewDataSource {
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return 7
+    return forecast.count
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -107,9 +118,23 @@ extension WeatherViewController: UICollectionViewDelegate, UICollectionViewDataS
 
 
 extension WeatherViewController: UITextFieldDelegate {
-  func textFieldDidEndEditing(_ textField: UITextField) {
-    zipcodeEntered = textField.text
-    
-    loadData()
+  
+  func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        zipcodeEntered = textField.text
+getLatLong()
+    //loadData()
+    zipcodeTextField.resignFirstResponder()
+
+    return true
   }
+  
+  
+//  func textFieldDidEndEditing(_ textField: UITextField) {
+//    zipcodeEntered = textField.text
+//
+//    loadData()
+//  }
+//  func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
+//    zipcodeTextField.resignFirstResponder()
+//  }
 }
