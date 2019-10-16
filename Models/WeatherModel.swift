@@ -23,15 +23,11 @@ struct dataWrapper: Codable {
   let windSpeed: Double
   let icon: String
   
-  
+  func convertTime(time: Double) -> String {
+    let exactDate = NSDate(timeIntervalSince1970: time)
+    let dateFormatt = DateFormatter()
+    dateFormatt.dateFormat = "MM/dd/yyyy"
+    return dateFormatt.string(from: exactDate as Date)
+  }
 }
 
-
-
-
-//let timestamp: NSNumber = (Date().timeIntervalSince1970 as AnyObject as! NSNumber)
-//print(timestamp)  // 1524654473.108564
-//let exactDate = NSDate(timeIntervalSince1970: TimeInterval(truncating: timestamp))
-//let dateFormatt = DateFormatter()
-//dateFormatt.dateFormat = "dd/MM/yyy hh:mm:ss a"
-//print(dateFormatt.string(from: exactDate as Date)) //25/04/2018 04:37:53 PM

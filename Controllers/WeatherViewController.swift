@@ -102,8 +102,8 @@ extension WeatherViewController: UICollectionViewDelegate, UICollectionViewDataS
       fatalError("expectd WeatherCollectionViewCEll but got something else")
     }
     let weather = forecast[indexPath.row]
-    
-    cell.cellDateLabel.text = ""
+    let date = weather.convertTime(time: Double(weather.time))
+    cell.cellDateLabel.text = "\(date)"
     cell.cellHighLabel.text = "\(weather.temperatureHigh) °F"
     cell.cellLowLabel.text = "\(weather.temperatureLow) °F"
     cell.cellWeatherIcon.image = UIImage(named: "\(weather.icon)")
