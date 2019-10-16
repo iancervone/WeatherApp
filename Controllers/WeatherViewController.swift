@@ -104,8 +104,8 @@ extension WeatherViewController: UICollectionViewDelegate, UICollectionViewDataS
     let weather = forecast[indexPath.row]
     let date = weather.convertTime(time: Double(weather.time))
     cell.cellDateLabel.text = "\(date)"
-    cell.cellHighLabel.text = "\(weather.temperatureHigh) °F"
-    cell.cellLowLabel.text = "\(weather.temperatureLow) °F"
+    cell.cellHighLabel.text = "\(Int(weather.temperatureHigh)) °F"
+    cell.cellLowLabel.text = "\(Int(weather.temperatureLow)) °F"
     cell.cellWeatherIcon.image = UIImage(named: "\(weather.icon)")
     return cell
   }
