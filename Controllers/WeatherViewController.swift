@@ -31,6 +31,7 @@ class WeatherViewController: UIViewController {
   var cityName: String? {
     didSet {
       weatherCollectionView.reloadData()
+      setlocationLabel()
     }
   }
   
@@ -42,6 +43,9 @@ class WeatherViewController: UIViewController {
       zipcodeTextField.delegate = self
     }
   
+  private func setlocationLabel() {
+    locationLabel.text = "\(cityName!)'s Weekly Forecast"
+  }
   
   private func getLatLong() {
   ZipCodeHelper.getLatLong(fromZipCode: zipcodeEntered ?? "10128"){ (result) in
