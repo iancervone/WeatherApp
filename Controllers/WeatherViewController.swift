@@ -1,12 +1,7 @@
-//
-//  WeatherViewController.swift
-//  WeatherApp
-//
-//  Created by Ian Cervone on 10/14/19.
-//  Copyright © 2019 Ian Cervone. All rights reserved.
-//
+
 
 import UIKit
+import Foundation
 
 class WeatherViewController: UIViewController {
     
@@ -15,10 +10,9 @@ class WeatherViewController: UIViewController {
   @IBOutlet weak var weatherCollectionView: UICollectionView!
   
   
-  var forecast = Forecast() {
+  var forecast = [dataWrapper]() {
     didSet {
       weatherCollectionView.reloadData()
-      
     }
   }
   
@@ -31,14 +25,12 @@ class WeatherViewController: UIViewController {
   var latLong: String? {
     didSet {
       weatherCollectionView.reloadData()
-     // getLatLong()
     }
   }
   
   var cityName: String? {
     didSet {
       weatherCollectionView.reloadData()
-     // getLatLong()
     }
   }
   
@@ -61,8 +53,8 @@ class WeatherViewController: UIViewController {
           DarkSkyAPIClient.manager.getForecast(from: self.latLong ?? "37.8267,-122.4233") { (result) in
             DispatchQueue.main.async { [weak self] in
               switch result {
-              case let .success(forecast):
-                self?.forecast = [forecast]
+              case let .success(forecastData):
+                self!.forecast = forecastData
               case let .failure(error):
                 self?.displayErrorAlert(with: error)
               }
@@ -73,22 +65,21 @@ class WeatherViewController: UIViewController {
           print(error)
       }
     }
-   // loadData()
   }
   
   
-  private func loadData() {
-    DarkSkyAPIClient.manager.getForecast(from: latLong ?? "37.8267,-122.4233") { (result) in
-      DispatchQueue.main.async { [weak self] in
-        switch result {
-        case let .success(forecast):
-          self?.forecast = forecast
-        case let .failure(error):
-          self?.displayErrorAlert(with: error)
-        }
-      }
-    }
-  }
+//  private func loadData() {
+//    DarkSkyAPIClient.manager.getForecast(from: latLong ?? "37.8267,-122.4233") { (result) in
+//      DispatchQueue.main.async { [weak self] in
+//        switch result {
+//        case let .success(forecast):
+//          self?.forecast = forecast
+//        case let .failure(error):
+//          self?.displayErrorAlert(with: error)
+//        }
+//      }
+//    }
+//  }
   
   func displayErrorAlert(with error: AppError) {
     let alertVC = UIAlertController(title: "Error Fetching Data", message: "\(error)", preferredStyle: .alert)
@@ -102,6 +93,7 @@ class WeatherViewController: UIViewController {
 
 extension WeatherViewController: UICollectionViewDelegate, UICollectionViewDataSource {
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+//    return forecast.daily.data.count
     return forecast.count
   }
   
@@ -110,9 +102,18 @@ extension WeatherViewController: UICollectionViewDelegate, UICollectionViewDataS
       fatalError("expectd WeatherCollectionViewCEll but got something else")
     }
     let weather = forecast[indexPath.row]
-    cell.cellHighLabel.text = "\(weather.daily.data.temperatureHigh) degrees F"
-    cell.cellLowLabel.text = "\(weather.daily.data.temperatureLow) degrees F"
+    
+    cell.cellDateLabel.text = ""
+    cell.cellHighLabel.text = "\(weather.temperatureHigh) °F"
+    cell.cellLowLabel.text = "\(weather.temperatureLow) °F"
+    cell.cellWeatherIcon.image = UIImage(named: "\(weather.icon)")
     return cell
+  }
+}
+
+extension WeatherViewController: UICollectionViewDelegateFlowLayout {
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    return CGSize(width: 165, height: 230)
   }
 }
 
@@ -121,10 +122,8 @@ extension WeatherViewController: UITextFieldDelegate {
   
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         zipcodeEntered = textField.text
-getLatLong()
-    //loadData()
-    zipcodeTextField.resignFirstResponder()
-
+        getLatLong()
+        zipcodeTextField.resignFirstResponder()
     return true
   }
   
