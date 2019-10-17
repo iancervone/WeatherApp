@@ -25,19 +25,19 @@ struct dataWrapper: Codable {
   let precipProbability: Double
   let icon: String
   
-  func convertTime(time: Double) -> String {
+  func convertDate(time: Double) -> String {
     let exactDate = NSDate(timeIntervalSince1970: time)
     let dateFormatt = DateFormatter()
     let timeFormatt = DateFormatter()
     dateFormatt.dateFormat = "MM/dd/yyyy"
-    timeFormatt.dateFormat = "a"
+    timeFormatt.dateFormat = "hh:mm:ss a"
     return dateFormatt.string(from: exactDate as Date)
   }
   
-  func dayOrNight(time: Double) -> String {
+  func convertTime(time: Double) -> String {
     let exactDate = NSDate(timeIntervalSince1970: time)
     let timeFormatt = DateFormatter()
-    timeFormatt.dateFormat = "a"
+    timeFormatt.dateFormat = "hh:mm a"
     return timeFormatt.string(from: exactDate as Date)
   }
 }

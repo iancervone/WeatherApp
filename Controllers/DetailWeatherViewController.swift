@@ -14,60 +14,79 @@ class DetailWeatherViewController: UIViewController {
   
   var city = String()
   
-  var cityLabel: UILabel = {
+  var sunRise: String {
+    let date = dailyForecast.convertDate(time: Double(dailyForecast.sunriseTime))
+    return date
+  }
+  
+  var sunSet: String {
+    let date = dailyForecast.convertDate(time: Double(dailyForecast.sunsetTime))
+    return date
+     }
+  
+  
+  //VIEWS
+  
+  lazy var cityLabel: UILabel = {
     let label = UILabel()
-    label.font = UIFont.systemFont(ofSize: 30.0, weight: UIFont.Weight.thin)
+    label.font = UIFont.systemFont( ofSize: 30.0, weight: UIFont.Weight.thin)
     label.textAlignment = .center
     label.backgroundColor = .red
     return label
   }()
   
-  var summaryLabel: UILabel = {
+  lazy var summaryLabel: UILabel = {
     let label = UILabel()
     return label
   }()
   
-  var highTempLabel: UILabel = {
+ lazy var highTempLabel: UILabel = {
   let label = UILabel()
+  
     return label
   }()
   
-  var lowTempLabel: UILabel = {
+  lazy var lowTempLabel: UILabel = {
     let label = UILabel()
     return label
   }()
   
-  var sunriseLabel: UILabel = {
+  lazy var sunriseLabel: UILabel = {
     let label = UILabel()
     return label
   }()
   
-  var sunsetLabel: UILabel = {
+  lazy var sunsetLabel: UILabel = {
     let label = UILabel()
     return label
   }()
   
-  var percipitationLabel: UILabel = {
+  lazy var percipitationLabel: UILabel = {
     let label = UILabel()
     return label
   }()
   
-  var windspeedLabel: UILabel = {
+  lazy var windspeedLabel: UILabel = {
     let label = UILabel()
     return label
   }()
   
-  var infoStack: UIStackView = {
-    let stack = UIStackView()
+  lazy var infoStack: UIStackView = {
+    let stack = UIStackView(arrangedSubviews: [highTempLabel, lowTempLabel, percipitationLabel, windspeedLabel, sunriseLabel, sunsetLabel])
+        stack.axis = .vertical
+        stack.distribution = .fillEqually
+        stack.alignment = .center
+        stack.spacing = 5
+        stack.translatesAutoresizingMaskIntoConstraints = false
     return stack
   }()
   
-  var cityImage: UIView = {
+  lazy var cityImage: UIView = {
     let view = UIView()
     return view
   }()
   
-  var saveButton: UIButton = {
+  lazy var saveButton: UIButton = {
     let button = UIButton()
     //save button needs an alert view
     return button
@@ -94,10 +113,19 @@ class DetailWeatherViewController: UIViewController {
         setInfo()
     }
   
+
+  
+  
 //SET INFO TO VIEWS
   private func setInfo() {
-   cityLabel.text = city
-
+    cityLabel.text = city
+    summaryLabel.text = dailyForecast.summary
+    highTempLabel.text = "Daily high: \(Int(dailyForecast.temperatureHigh)) °F"
+    lowTempLabel.text = "Daily Low: \(Int(dailyForecast.temperatureLow)) °F"
+    sunriseLabel.text = "Todays sunrise: \(sunRise)"
+    sunriseLabel.text = "Todays sunset: \(sunSet)"
+    windspeedLabel.text = "Current wind speed \(dailyForecast.windSpeed) MPH"
+    percipitationLabel.text = "Chance of percipitation: \(dailyForecast.precipProbability)%"
   }
   
     

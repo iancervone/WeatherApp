@@ -16,17 +16,20 @@ class WeatherViewController: UIViewController {
     }
   }
   
+  
   var zipcodeEntered: String? = nil {
     didSet {
       weatherCollectionView.reloadData()
     }
   }
     
+  
   var latLong: String? {
     didSet {
       weatherCollectionView.reloadData()
     }
   }
+  
   
   var cityName: String? {
     didSet {
@@ -43,14 +46,17 @@ class WeatherViewController: UIViewController {
       zipcodeTextField.delegate = self
     }
   
+  
 //  private func setBackground() {
 //    let dayNight = forecast.dayOrNight(time: Double(forecast.time))
 //
 //  }
   
+  
   private func setlocationLabel() {
     locationLabel.text = "\(cityName!)'s Weekly Forecast"
   }
+  
   
   private func getLatLong() {
   ZipCodeHelper.getLatLong(fromZipCode: zipcodeEntered ?? "10128"){ (result) in
@@ -77,13 +83,11 @@ class WeatherViewController: UIViewController {
   }
   
   
-  
   func displayErrorAlert(with error: AppError) {
     let alertVC = UIAlertController(title: "Error Fetching Data", message: "\(error)", preferredStyle: .alert)
     alertVC.addAction(UIAlertAction(title: "ok", style: .cancel, handler: nil))
     present(alertVC, animated: true, completion: nil)
   }
-  
   
   
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -97,8 +101,6 @@ class WeatherViewController: UIViewController {
     }
   
   
-  
-
   
 
 }
@@ -116,7 +118,7 @@ extension WeatherViewController: UICollectionViewDelegate, UICollectionViewDataS
       fatalError("expectd WeatherCollectionViewCEll but got something else")
     }
     let weather = forecast[indexPath.row]
-    let date = weather.convertTime(time: Double(weather.time))
+    let date = weather.convertDate(time: Double(weather.time))
     cell.cellDateLabel.text = "\(date)"
     cell.cellHighLabel.text = "\(Int(weather.temperatureHigh)) °F"
     cell.cellLowLabel.text = "\(Int(weather.temperatureLow)) °F"
@@ -124,6 +126,7 @@ extension WeatherViewController: UICollectionViewDelegate, UICollectionViewDataS
     return cell
   }
 }
+
 
 extension WeatherViewController: UICollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -140,14 +143,4 @@ extension WeatherViewController: UITextFieldDelegate {
         zipcodeTextField.resignFirstResponder()
     return true
   }
-  
-  
-//  func textFieldDidEndEditing(_ textField: UITextField) {
-//    zipcodeEntered = textField.text
-//
-//    loadData()
-//  }
-//  func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
-//    zipcodeTextField.resignFirstResponder()
-//  }
 }
