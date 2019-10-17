@@ -26,8 +26,17 @@ struct dataWrapper: Codable {
   func convertTime(time: Double) -> String {
     let exactDate = NSDate(timeIntervalSince1970: time)
     let dateFormatt = DateFormatter()
+    let timeFormatt = DateFormatter()
     dateFormatt.dateFormat = "MM/dd/yyyy"
+    timeFormatt.dateFormat = "a"
     return dateFormatt.string(from: exactDate as Date)
+  }
+  
+  func dayOrNight(time: Double) -> String {
+    let exactDate = NSDate(timeIntervalSince1970: time)
+    let timeFormatt = DateFormatter()
+    timeFormatt.dateFormat = "a"
+    return timeFormatt.string(from: exactDate as Date)
   }
 }
 

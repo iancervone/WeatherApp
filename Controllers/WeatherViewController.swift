@@ -43,6 +43,11 @@ class WeatherViewController: UIViewController {
       zipcodeTextField.delegate = self
     }
   
+//  private func setBackground() {
+//    let dayNight = forecast.dayOrNight(time: Double(forecast.time))
+//
+//  }
+  
   private func setlocationLabel() {
     locationLabel.text = "\(cityName!)'s Weekly Forecast"
   }
@@ -72,18 +77,6 @@ class WeatherViewController: UIViewController {
   }
   
   
-//  private func loadData() {
-//    DarkSkyAPIClient.manager.getForecast(from: latLong ?? "37.8267,-122.4233") { (result) in
-//      DispatchQueue.main.async { [weak self] in
-//        switch result {
-//        case let .success(forecast):
-//          self?.forecast = forecast
-//        case let .failure(error):
-//          self?.displayErrorAlert(with: error)
-//        }
-//      }
-//    }
-//  }
   
   func displayErrorAlert(with error: AppError) {
     let alertVC = UIAlertController(title: "Error Fetching Data", message: "\(error)", preferredStyle: .alert)
