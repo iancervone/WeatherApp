@@ -118,7 +118,12 @@ class DetailWeatherViewController: UIViewController {
 
   private func summaryLabelConstraints() {
     summaryLabel.translatesAutoresizingMaskIntoConstraints = false
-      NSLayoutConstraint
+    NSLayoutConstraint.activate([
+      summaryLabel.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 550),
+      summaryLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+      summaryLabel.heightAnchor.constraint(equalToConstant: 200),
+      summaryLabel.widthAnchor.constraint(equalToConstant: 300)
+    ])
   }
   
   
