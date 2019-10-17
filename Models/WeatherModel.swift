@@ -3,14 +3,14 @@ import Foundation
 
 
 struct Forecast: Codable {
-  let latitude: Double
-  let longitude: Double
+//  let latitude: Double
+//  let longitude: Double
   let daily: Daily
 }
 
 struct Daily: Codable {
-  let summary: String
-  let icon: String
+//  let summary: String
+//  let icon: String
   let data: [dataWrapper]
 }
 

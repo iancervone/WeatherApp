@@ -12,7 +12,16 @@ class DetailWeatherViewController: UIViewController {
 
   var dailyForecast: dataWrapper!
   
+  var photos = [PhotoDetails]()
+    
   var city = String()
+  
+  var cityPhoto = UIImage() {
+    didSet {
+      setCityPhoto()
+    }
+  }
+
   
   var sunRise: String {
     let date = dailyForecast.convertDate(time: Double(dailyForecast.sunriseTime))
@@ -81,8 +90,8 @@ class DetailWeatherViewController: UIViewController {
     return stack
   }()
   
-  lazy var cityImage: UIView = {
-    let view = UIView()
+  lazy var cityImage: UIImageView = {
+    let view = UIImageView()
     return view
   }()
   
@@ -126,8 +135,35 @@ class DetailWeatherViewController: UIViewController {
     sunriseLabel.text = "Todays sunset: \(sunSet)"
     windspeedLabel.text = "Current wind speed \(dailyForecast.windSpeed) MPH"
     percipitationLabel.text = "Chance of percipitation: \(dailyForecast.precipProbability)%"
+    cityImage.image = cityPhoto
   }
   
+  private func loadPhoto() {
+    PicbayAPIClient.manager.getPhotos(from: city ?? "lost") { (result) in
+      DispatchQueue.main.async {
+        switch result {
+        case .success(let PhotosFromOnline):
+          self.photos = PhotosFromOnline
+        case .failure(let error):
+          print(error)
+        }
+      }
+    }
+  }
+  
+  private func setCityPhoto() {
+  let urlStr = photos[1].largeImageURL
+    ImageHelper.shared.getImage(urlStr: urlStr) {(result) in
+      DispatchQueue.main.async {
+        switch result {
+        case .failure(let error):
+          print(error)
+        case .success(let image):
+          self.cityPhoto = image
+        }
+      }
+    }
+  }
     
 //CONSTRAINTS
   private func setUpConstraints() {
