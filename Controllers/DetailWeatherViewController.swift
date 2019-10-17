@@ -93,6 +93,7 @@ class DetailWeatherViewController: UIViewController {
   private func setUpConstraints() {
     cityLabelConstraints()
     cityImageConstraint()
+    summaryLabelConstraints()
   }
   
   private func cityLabelConstraints() {
@@ -121,11 +122,20 @@ class DetailWeatherViewController: UIViewController {
     NSLayoutConstraint.activate([
       summaryLabel.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 550),
       summaryLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-      summaryLabel.heightAnchor.constraint(equalToConstant: 200),
+      summaryLabel.heightAnchor.constraint(equalToConstant: 140),
       summaryLabel.widthAnchor.constraint(equalToConstant: 300)
     ])
   }
   
+  private func infoStackConstraints() {
+    infoStack.translatesAutoresizingMaskIntoConstraints = false
+    NSLayoutConstraint.activate([
+      infoStack.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 700),
+      infoStack.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+      infoStack.heightAnchor.constraint(equalToConstant: 250),
+      infoStack.widthAnchor.constraint(equalToConstant: 300)
+    ])
+  }
   
   
   
