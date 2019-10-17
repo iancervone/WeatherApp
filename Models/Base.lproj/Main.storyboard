@@ -67,7 +67,7 @@
                                             <outlet property="cellHighLabel" destination="Z94-G4-toG" id="GA7-y2-ubv"/>
                                             <outlet property="cellLowLabel" destination="z8H-an-JjK" id="4b8-1J-yJf"/>
                                             <outlet property="cellWeatherIcon" destination="WON-bl-rRy" id="tqM-2m-4T3"/>
-                                            <segue destination="gd3-QK-3MT" kind="show" id="Cdg-9K-9AJ"/>
+                                            <segue destination="gd3-QK-3MT" kind="show" identifier="segueToDetailWeatherVC" id="Cdg-9K-9AJ"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>

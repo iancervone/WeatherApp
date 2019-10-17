@@ -15,12 +15,14 @@ struct Daily: Codable {
 }
 
 struct dataWrapper: Codable {
+  let summary: String
   let time: Int
   let sunriseTime: Int
   let sunsetTime: Int
   let temperatureHigh: Double
   let temperatureLow: Double
   let windSpeed: Double
+  let precipProbability: Double
   let icon: String
   
   func convertTime(time: Double) -> String {

@@ -10,6 +10,9 @@ import UIKit
 
 class DetailWeatherViewController: UIViewController {
 
+  var dailyForecast: dataWrapper!
+  
+  var city = String()
   
   var cityLabel: UILabel = {
     let label = UILabel()
@@ -94,6 +97,7 @@ class DetailWeatherViewController: UIViewController {
     cityLabelConstraints()
     cityImageConstraint()
     summaryLabelConstraints()
+    infoStackConstraints()
   }
   
   private func cityLabelConstraints() {

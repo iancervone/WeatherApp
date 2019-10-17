@@ -84,6 +84,22 @@ class WeatherViewController: UIViewController {
     present(alertVC, animated: true, completion: nil)
   }
   
+  
+  
+  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "segueToDetailWeatherVC" {
+            let destinationVC = segue.destination as! DetailWeatherViewController
+            let cell = sender as! UICollectionViewCell
+            let indexPaths = self.weatherCollectionView.indexPath(for: cell)
+            destinationVC.dailyForecast = forecast[indexPaths!.row]
+            destinationVC.city = cityName ?? "Lost City"
+        }
+    }
+  
+  
+  
+
+  
 
 }
 
@@ -93,6 +109,7 @@ extension WeatherViewController: UICollectionViewDelegate, UICollectionViewDataS
 //    return forecast.daily.data.count
     return forecast.count
   }
+  
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     guard let cell = weatherCollectionView.dequeueReusableCell(withReuseIdentifier: "weatherCell", for: indexPath) as? WeatherCollectionViewCell else {
