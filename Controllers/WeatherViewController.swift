@@ -92,7 +92,7 @@ class WeatherViewController: UIViewController {
             let cell = sender as! UICollectionViewCell
             let indexPaths = self.weatherCollectionView.indexPath(for: cell)
             destinationVC.dailyForecast = forecast[indexPaths!.row]
-            destinationVC.city = cityName ?? "Lost City"
+            destinationVC.city = cityName!
         }
     }
   

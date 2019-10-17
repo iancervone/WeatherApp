@@ -16,8 +16,9 @@ class DetailWeatherViewController: UIViewController {
   
   var cityLabel: UILabel = {
     let label = UILabel()
+    label.font = UIFont.systemFont(ofSize: 30.0, weight: UIFont.Weight.thin)
+    label.textAlignment = .center
     label.backgroundColor = .red
-    label.text = "SHOW ME"
     return label
   }()
   
@@ -90,7 +91,15 @@ class DetailWeatherViewController: UIViewController {
         super.viewDidLoad()
         setUpSubViews()
         setUpConstraints()
+        setInfo()
     }
+  
+//SET INFO TO VIEWS
+  private func setInfo() {
+   cityLabel.text = city
+
+  }
+  
     
 //CONSTRAINTS
   private func setUpConstraints() {
