@@ -30,28 +30,5 @@ class ZipCodeHelper {
             }
         }
     }
-  
-  
 }
 
-
-//var latLong = String {
-//ZipCodeHelper.getLatLong(fromZipCode: "60613") { (result) in
-//    switch result {
-//    case let .success((lat, long, name)):
-//        return(lat, long, name)
-//    case let .failure(error):
-//        print(error)
-//    }
-//  }
-//}()
-
-
-//ZipCodeHelper.getLatLong(fromZipCode: "60613") { (result) in
-//    switch result {
-//    case let .success((lat, long, name)):
-//        print(lat, long)
-//    case let .failure(error):
-//        print(error)
-//    }
-//}

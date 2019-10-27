@@ -44,19 +44,20 @@ class WeatherViewController: UIViewController {
       weatherCollectionView.dataSource = self
       weatherCollectionView.delegate = self
       zipcodeTextField.delegate = self
+      self.zipcodeEntered =  UserDefaultsWrapper.wrapper.getUserZip()
+      getLatLong()
     }
   
   
-//  private func setBackground() {
-//    let dayNight = forecast.dayOrNight(time: Double(forecast.time))
-//
-//  }
+  func defaultZip() {
+  }
   
   
   private func setlocationLabel() {
     locationLabel.text = "\(cityName!)'s Weekly Forecast"
   }
   
+ 
   
   private func getLatLong() {
   ZipCodeHelper.getLatLong(fromZipCode: zipcodeEntered ?? "10128"){ (result) in
@@ -108,7 +109,6 @@ class WeatherViewController: UIViewController {
 
 extension WeatherViewController: UICollectionViewDelegate, UICollectionViewDataSource {
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//    return forecast.daily.data.count
     return forecast.count
   }
   
@@ -139,6 +139,7 @@ extension WeatherViewController: UITextFieldDelegate {
   
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         zipcodeEntered = textField.text
+    UserDefaultsWrapper.wrapper.storeUserZip(zip: zipcodeEntered!)
         getLatLong()
         zipcodeTextField.resignFirstResponder()
     return true

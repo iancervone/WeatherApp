@@ -6,8 +6,8 @@ struct PicbayAPIClient {
   static let manager = PicbayAPIClient()
   
   
-  func getPhotos(from search: String, completionHandler: @escaping (Result<[PhotoDetails], AppError>) -> ())  {
-    guard let photoURL = URL(string: "https://pixabay.com/api/?key=13808200-81ee63e0877b0001abe64bfd1&q=\(city)") else {
+  func getPhotos(from location: String, completionHandler: @escaping (Result<[PhotoDetails], AppError>) -> ())  {
+    guard let photoURL = URL(string: "https://pixabay.com/api/?key=13808200-81ee63e0877b0001abe64bfd1&q=\(location)") else {
       fatalError()
     }
     NetworkHelper.manager.getData(from: photoURL) { result in

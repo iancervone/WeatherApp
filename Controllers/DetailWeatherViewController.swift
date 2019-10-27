@@ -12,13 +12,20 @@ class DetailWeatherViewController: UIViewController {
 
   var dailyForecast: dataWrapper!
   
-  var photos = [PhotoDetails]()
+  var photos = [PhotoDetails]() {
+    didSet {
+      setCityPhoto()
+    }
+  }
     
   var city = String()
   
   var cityPhoto = UIImage() {
     didSet {
-      setCityPhoto()
+      cityImage.image = cityPhoto
+
+//      loadPhoto()
+//      setCityPhoto()
     }
   }
 
@@ -120,6 +127,8 @@ class DetailWeatherViewController: UIViewController {
         setUpSubViews()
         setUpConstraints()
         setInfo()
+        loadPhoto()
+//        setCityPhoto()
     }
   
 
@@ -135,11 +144,11 @@ class DetailWeatherViewController: UIViewController {
     sunriseLabel.text = "Todays sunset: \(sunSet)"
     windspeedLabel.text = "Current wind speed \(dailyForecast.windSpeed) MPH"
     percipitationLabel.text = "Chance of percipitation: \(dailyForecast.precipProbability)%"
-    cityImage.image = cityPhoto
+//    cityImage.image = cityPhoto
   }
   
   private func loadPhoto() {
-    PicbayAPIClient.manager.getPhotos(from: city ?? "lost") { (result) in
+    PicbayAPIClient.manager.getPhotos(from: city.lowercased().replacingOccurrences(of: " ", with: "")) { (result) in
       DispatchQueue.main.async {
         switch result {
         case .success(let PhotosFromOnline):
@@ -152,7 +161,7 @@ class DetailWeatherViewController: UIViewController {
   }
   
   private func setCityPhoto() {
-  let urlStr = photos[1].largeImageURL
+  let urlStr = photos[0].largeImageURL
     ImageHelper.shared.getImage(urlStr: urlStr) {(result) in
       DispatchQueue.main.async {
         switch result {
